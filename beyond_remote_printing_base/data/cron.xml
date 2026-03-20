@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ir_cron_remote_printing_cleanup_tasks" model="ir.cron">
+        <field name="name">Remote Printing: Cleanup Tasks</field>
+        <field name="model_id" ref="model_remote_printer_task"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="state">code</field>
+        <field name="code">
+            model.cron_cleanup_tasks()
+        </field>
+    </record>
+
+</odoo>

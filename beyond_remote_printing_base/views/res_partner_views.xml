@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">view_partner_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name='labels' string="Labels" groups="beyond_remote_printing_base.group_remote_printing_manager">
+
+                    <group name="label_content" string="label content">
+                        <field name="zpl_content_id" nolabel="1" colspan="2">
+                            <list>
+                                <field name="name"></field>
+                                <field name="x_pos" />
+                                <field name="y_pos" />
+                                <field name="label_type_id" widget="many2many_tags" />
+                                <field name="use" />
+                            </list>
+                        </field>
+                    </group>
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top menu item -->
+    <menuitem id="remote_printer_menu_root" name="Remote Printing" parent="base.menu_administration" />
+    <!-- Menu bar items -->
+
+    <menuitem
+        id="remote_printer_menu_servers"
+        name="Servers"
+        parent="remote_printer_menu_root"
+        action="remote_printer_servers_action" />
+
+    <menuitem
+        id="remote_printer_menu_printers"
+        name="Printers"
+        parent="remote_printer_menu_root"
+        action="remote_printer_printers_action" />
+
+    <menuitem
+        id="remote_printer_menu_tasks"
+        name="Tasks"
+        parent="remote_printer_menu_root"
+        action="remote_printer_tasks_action" />
+        
+</odoo>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Printers -->
+    <record id="remote_printer_printers_view_list" model="ir.ui.view">
+        <field name="name">remote.printer.printer.list</field>
+        <field name="model">remote.printer.printer</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1" editable="bottom">
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="technical_name" />
+                <field name="default_label_type_id" widget="many2many_tags" />
+                <field name="state" />
+                <field name="server_id" />
+                <field name="task_ids" />
+                <field name="zpl" />
+                <field name="pdf" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_remote_printer_printer_form" model="ir.ui.view">
+        <field name="name">remote.printer.printer.form</field>
+        <field name="model">remote.printer.printer</field>
+        <field name="arch" type="xml">
+            <form string="Remote Printer">
+                <sheet>
+                    <header>
+                        <button name="set_cancel_tasks" string="Cancel All Tasks" type="object" class="btn-warning"></button>
+                    </header>
+                    <group>
+                        <field name="name" />
+                        <field name="technical_name" />
+                        <field name="default_label_type_id" widget="many2many_tags" />
+                        <field name="state" readonly="1" />
+                        <field name="server_id" />
+                        <field name="zpl" />
+                        <field name="pdf" />
+                    </group>
+                    <notebook>
+                        <page string="Tasks">
+                            <field name="task_ids" readonly="1">
+                                <list>
+                                    <field name="name" />
+                                    <field name="res_id" />
+                                    <field name="res_model" />
+                                    <field name="quantity" />
+                                    <field name="state" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="remote_printer_printers_action" model="ir.actions.act_window">
+        <field name="name">Printers</field>
+        <field name="res_model">remote.printer.printer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

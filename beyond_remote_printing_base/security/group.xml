@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_remote_printing" model="ir.module.category">
+        <field name="name">Remote Printing</field>
+        <field name="description">Manage remote printing features</field>
+        <field name="sequence">999</field>
+    </record>
+
+    <record id="group_remote_printing_manager" model="res.groups">
+        <field name="name">Remote Printing Manager</field>
+    </record>
+
+  
+</odoo>

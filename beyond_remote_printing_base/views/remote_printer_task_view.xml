@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tasks -->
+    <record id="remote_printer_tasks_view_list" model="ir.ui.view">
+        <field name="name">remote.printer.task.list</field>
+        <field name="model">remote.printer.task</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="printer_id" />
+                <field name="server_id" />
+                <field name="res_id" />
+                <field name="res_model" />
+                <field name="quantity" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_remote_printer_task_form" model="ir.ui.view">
+        <field name="name">remote.printer.task.form</field>
+        <field name="model">remote.printer.task</field>
+        <field name="arch" type="xml">
+            <form string="Remote Printer Task">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="printer_id" />
+                        <field name="server_id" />
+                        <field name="res_id" />
+                        <field name="res_model" />
+                    </group>
+
+                    <group>
+                        <field name="quantity" />
+                        <field name="state" />
+                        <field name="task_type" />
+                        <field name="zpl_data" />
+                        <field name="report_id" />
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="remote_printer_tasks_action" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">remote.printer.task</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="label_type_box" model="label.type">
+        <field name="key">box-label</field>
+        <field name="name">box-label</field>
+    </record>
+
+    <record id="label_type_pallet" model="label.type">
+        <field name="key">pallet-label</field>
+        <field name="name">pallet-label</field>
+    </record>
+
+    <record id="label_type_product_info" model="label.type">
+        <field name="key">product-info-label</field>
+        <field name="name">product-info-label</field>
+    </record>
+
+    <record id="label_type_a4" model="label.type">
+        <field name="key">a4</field>
+        <field name="name">A4</field>
+    </record>
+
+</odoo>

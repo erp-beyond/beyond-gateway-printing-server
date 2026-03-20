@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="label_content_view_form" model="ir.ui.view">
+        <field name="name">label.content.view.form</field>
+        <field name="model">label.content</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+
+                        <label for="name" />
+                        <field name="name" />
+
+                        <label for="zpl_data" />
+                        <field name="zpl_data" />
+
+                        <group>
+                            <field name="x_pos" />
+                            <field name="y_pos" />
+                            <field name="label_type_id" widget="many2many_tags" />
+                            <field name="use"/>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
