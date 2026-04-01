@@ -234,7 +234,7 @@ class RemotePrinterTask(models.Model):
             'task_server_identifier': relay_server_id.task_server_identifier if relay_server_id else None,
             'pdf_data': pdf_data,
             'pdf_filename': pdf_filename,
-            'production_name': task_vals.get('server_identifier') or '',
+            'production_name': relay_server_id.server_identifier if relay_server_id else '',
         })
 
         return True
