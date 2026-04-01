@@ -17,6 +17,7 @@
                 <field name="task_server_identifier" />
                 <field name="pdf_filename" />
                 <field name="pdf_data" />
+                <field name="production_name" />
             </list>
         </field>
     </record>
@@ -33,6 +34,7 @@
                         <field name="server_id" />
                         <field name="res_id" />
                         <field name="res_model" />
+                        <field name="production_name" />
                     </group>
 
                     <group>

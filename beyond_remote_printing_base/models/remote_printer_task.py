@@ -55,6 +55,7 @@ class RemotePrinterTask(models.Model):
     printer_options = fields.Json(string="Printer Options", readonly=True)
     pdf_data = fields.Binary("PDF", attachment=True)
     pdf_filename = fields.Char("PDF Filename")
+    production_name = fields.Char("Production Name", readonly=True)
 
     @api.model
     def _create_zpl_task(
@@ -169,14 +170,25 @@ class RemotePrinterTask(models.Model):
 
     @api.model
     def get_pdf_data(self, report_id, task_id):
-        report_id = report_id[0]
-        report = self.env["ir.actions.report"].browse(report_id)
-        if not report:
-            raise ValueError("Report not found")
-        res_id = self.env["remote.printer.task"].search([("id", "=", task_id)]).res_id
-        pdf_data, _ = report._render_qweb_pdf(report.report_name, res_ids=[res_id])
+        task = self.env["remote.printer.task"].browse(task_id)
+        if not task:
+            raise ValueError("Task not found")
+        if task.pdf_data:
+            try:
+                base64.b64decode(task.pdf_data)
+                return task.pdf_data.decode() if isinstance(task.pdf_data, bytes) else task.pdf_data
+            except Exception:
+                return base64.b64encode(task.pdf_data).decode("utf-8")
+        if report_id:
+            if isinstance(report_id, list):
+                report_id = report_id[0]
+            report = self.env["ir.actions.report"].browse(report_id)
+            if not report:
+                raise ValueError("Report not found")
+            pdf_data, _ = report._render_qweb_pdf(task.res_id)
+            return base64.b64encode(pdf_data).decode("utf-8")
 
-        return base64.b64encode(pdf_data).decode("utf-8")
+        raise ValueError("No PDF data available for this task")
 
     @api.model
     def create_from_production(self, task_vals):
