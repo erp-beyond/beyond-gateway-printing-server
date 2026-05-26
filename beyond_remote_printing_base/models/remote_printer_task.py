@@ -55,7 +55,7 @@ class RemotePrinterTask(models.Model):
     printer_options = fields.Json(string="Printer Options", readonly=True)
     pdf_data = fields.Binary("PDF", attachment=True)
     pdf_filename = fields.Char("PDF Filename")
-    production_id = fields.Integer("Production ID", readonly=True)
+    production_id = fields.Char("Production ID", readonly=True)
 
     @api.model
     def _create_zpl_task(
@@ -234,7 +234,7 @@ class RemotePrinterTask(models.Model):
             'task_server_identifier': relay_server_id.task_server_identifier if relay_server_id else None,
             'pdf_data': pdf_data,
             'pdf_filename': pdf_filename,
-            'production_id': task_vals.get('server_identifier') or '2',
+            'production_id': task_vals.get('server_identifier') or '',
         })
 
         return True
