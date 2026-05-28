@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
-                <field name="printer_id" />
+                <field name="printer_technical_name" />
                 <field name="server_id" />
                 <field name="res_id" />
                 <field name="res_model" />
@@ -30,7 +30,7 @@
                 <sheet>
                     <group>
                         <field name="name" />
-                        <field name="printer_id" />
+                        <field name="printer_technical_name" />
                         <field name="server_id" />
                         <field name="res_id" />
                         <field name="res_model" />

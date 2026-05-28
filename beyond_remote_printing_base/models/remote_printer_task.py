@@ -56,6 +56,7 @@ class RemotePrinterTask(models.Model):
     pdf_data = fields.Binary("PDF", attachment=True)
     pdf_filename = fields.Char("PDF Filename")
     production_id = fields.Char("Production ID", readonly=True)
+    printer_technical_name = fields.Char(string="Printer Technical Name", readonly=True)
 
     @api.model
     def _create_zpl_task(
@@ -196,15 +197,10 @@ class RemotePrinterTask(models.Model):
         Called by production Odoo via XML-RPC.
         Finds the correct printer by technical name and creates the task.
         """
-        printer = self.env['remote.printer.printer'].sudo().search([
-            ('technical_name', '=', task_vals.get('printer_technical_name'))
-        ], limit=1)
+
 
         get_param = self.env['ir.config_parameter'].sudo().get_param
         relay_server_id = get_param('remote_printing_relay.default_server_id')
-
-        if not printer:
-            raise ValueError(f"Printer not found: {task_vals.get('printer_technical_name')}")
 
         report_id = False
         if task_vals.get('task_type') == 'pdf' and task_vals.get('report_xml_id'):
@@ -215,13 +211,12 @@ class RemotePrinterTask(models.Model):
             except Exception:
                 report_id = False
 
-        # Get PDF data and filename from task_vals
         pdf_data = task_vals.get('pdf_data') or False
         pdf_filename = task_vals.get('pdf_filename') or 'document.pdf'
 
         self.sudo().create({
             'name': task_vals.get('name'),
-            'printer_id': printer.id,
+            'printer_technical_name': task_vals.get('printer_technical_name'),
             'res_id': task_vals.get('res_id'),
             'res_model': task_vals.get('res_model'),
             'quantity': task_vals.get('quantity', 1),
