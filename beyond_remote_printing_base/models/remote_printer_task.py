@@ -9,7 +9,7 @@ class RemotePrinterTask(models.Model):
 
     name = fields.Char("Name")
     printer_id = fields.Many2one(
-        comodel_name="remote.printer.printer", string="Remote Printer", required=True
+        comodel_name="remote.printer.printer", string="Remote Printer", required=False
     )
     server_id = fields.Many2one(
         comodel_name="remote.printer.server",
