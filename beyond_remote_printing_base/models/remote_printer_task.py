@@ -57,6 +57,7 @@ class RemotePrinterTask(models.Model):
     pdf_filename = fields.Char("PDF Filename")
     production_id = fields.Char("Production ID", readonly=True)
     printer_technical_name = fields.Char(string="Printer Technical Name", readonly=True)
+    server_technical_name = fields.Char(string="Server Technical Name", readonly=True)
 
     @api.model
     def _create_zpl_task(
@@ -217,6 +218,7 @@ class RemotePrinterTask(models.Model):
         self.sudo().create({
             'name': task_vals.get('name'),
             'printer_technical_name': task_vals.get('printer_technical_name'),
+            'server_technical_name': task_vals.get('server_technical_name'),
             'res_id': task_vals.get('res_id'),
             'res_model': task_vals.get('res_model'),
             'quantity': task_vals.get('quantity', 1),

@@ -9,7 +9,7 @@
             <list>
                 <field name="name" />
                 <field name="printer_technical_name" />
-                <field name="server_id" />
+                <field name="server_technical_name" />
                 <field name="res_id" />
                 <field name="res_model" />
                 <field name="quantity" />
@@ -31,7 +31,7 @@
                     <group>
                         <field name="name" />
                         <field name="printer_technical_name" />
-                        <field name="server_id" />
+                        <field name="server_technical_name" />
                         <field name="res_id" />
                         <field name="res_model" />
                         <field name="production_id" />
