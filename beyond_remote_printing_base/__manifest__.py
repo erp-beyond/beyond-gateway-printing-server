@@ -5,7 +5,7 @@
     "summary": "",
     "version:": "19.0.0.7",
     "description": "",
-    "depends": ["base", "mrp", "stock"],
+    "depends": ["base", "mrp", "stock","sale"],
     "data": [
         "security/group.xml",
         "security/ir.model.access.csv",

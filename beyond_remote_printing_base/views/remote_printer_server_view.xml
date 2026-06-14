@@ -30,6 +30,9 @@
                         <field name="technical_name" />
                         <field name="online" readonly="1" />
                         <field name="last_connection" readonly="1" />
+                        <field name="api_key" />
+                        <field name="production_url"  />
+                        <field name="production_db"  />
                     </group>
                     <notebook>
                         <page string="Printers">
