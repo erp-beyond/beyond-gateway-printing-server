@@ -213,6 +213,14 @@ class RemotePrinterTask(models.Model):
                     {}
                 )
                 task.write({'pdf_data': pdf_data})
+                
+                models_proxy.execute_kw(
+                    task.server_id.production_db, uid, decrypted_api_key,
+                    'remote.printer.task', 'set_done',
+                    [task.odoo_production_task_id],
+                    {}
+                )
+                
                 return pdf_data
             except Exception as e:
                 _logger.warning("Failed to retrieve PDF from production server: %s", e)
