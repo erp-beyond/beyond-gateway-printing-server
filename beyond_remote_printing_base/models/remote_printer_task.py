@@ -176,7 +176,7 @@ class RemotePrinterTask(models.Model):
     def get_pdf_data(self, report_id, task_id):
         """
         Retrieve PDF data with multiple fallback mechanisms:
-        1. L ocal PDF data stored in task
+        1. Local PDF data stored in task
         2. Local report generation
         3. Production server via XML-RPC API
         """
@@ -185,6 +185,8 @@ class RemotePrinterTask(models.Model):
         if not task:
             raise ValueError("Task not found")
         
+        _logger.info("get_pdf_data called for task_id=%s, report_id=%s", task_id, report_id)
+        
         if task.pdf_data:
             try:
                 base64.b64decode(task.pdf_data)
@@ -192,9 +194,18 @@ class RemotePrinterTask(models.Model):
             except Exception:
                 return base64.b64encode(task.pdf_data).decode("utf-8")
         
+        _logger.info("Task has no local pdf_data, checking for production server...")
+        
+        if task.server_id:
+            _logger.info("Task has server_id: %s, production_url: %s, production_db: %s", 
+                        task.server_id.id, task.server_id.production_url, task.server_id.production_db)
+        else:
+            _logger.warning("Task has no server_id configured")
+            raise ValueError("No server configuration for this task")
 
         if task.server_id.production_url and task.server_id.production_db:
             try:
+                _logger.info("Attempting to retrieve PDF from production server...")
                 decrypted_api_key = self.env['remote.printer.server']._decrypt_api_key(task.server_id.api_key)
                 
                 common = xmlrpc.client.ServerProxy(f'{task.server_id.production_url}/xmlrpc/2/common', allow_none=True)
@@ -205,6 +216,8 @@ class RemotePrinterTask(models.Model):
                     {}
                 )
                 
+                _logger.info("Authenticated to production server with uid: %s", uid)
+                
                 models_proxy = xmlrpc.client.ServerProxy(f'{task.server_id.production_url}/xmlrpc/2/object', allow_none=True)
                 pdf_data = models_proxy.execute_kw(
                     task.server_id.production_db, uid, decrypted_api_key,
@@ -212,6 +225,9 @@ class RemotePrinterTask(models.Model):
                     [report_id, task.odoo_production_task_id],
                     {}
                 )
+                
+                _logger.info("Successfully retrieved PDF from production server, pdf_data length: %s", len(pdf_data) if pdf_data else 0)
+                
                 task.write({'pdf_data': pdf_data})
                 
                 models_proxy.execute_kw(
@@ -223,8 +239,10 @@ class RemotePrinterTask(models.Model):
                 
                 return pdf_data
             except Exception as e:
-                _logger.warning("Failed to retrieve PDF from production server: %s", e)
+                _logger.error("Failed to retrieve PDF from production server: %s", e, exc_info=True)
+                raise ValueError(f"PDF retrieval failed: {str(e)}")
         
+        _logger.warning("No production server configured for task %s", task_id)
         raise ValueError("No PDF data available for this task")
 
     @api.model
